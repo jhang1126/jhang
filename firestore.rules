@@ -1,0 +1,30 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Health check endpoint for testing Firestore connectivity
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Tickets collection: full multi-user collaborative maintenance tickets
+    match /tickets/{ticketId} {
+      allow read, write: if true;
+    }
+
+    // Technicians collection: technician profiles and workload counters
+    match /technicians/{technicianId} {
+      allow read, write: if true;
+    }
+
+    // Accounts collection: system personnel accounts and permissions
+    match /accounts/{accountId} {
+      allow read, write: if true;
+    }
+
+    // Default deny for any other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

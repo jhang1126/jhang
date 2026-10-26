@@ -1,0 +1,117 @@
+{
+  "entities": {
+    "ticket": {
+      "title": "Maintenance Ticket",
+      "description": "Equipment maintenance and dispatch ticket record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Ticket ID e.g. TK-20261018-001" },
+        "region": { "type": "string", "enum": ["市區", "大武區", "關山區", "成功區"] },
+        "customerName": { "type": "string", "maxLength": 200 },
+        "contactPerson": { "type": "string", "maxLength": 100 },
+        "contactPhone": { "type": "string", "maxLength": 50 },
+        "address": { "type": "string", "maxLength": 500 },
+        "equipmentName": { "type": "string", "maxLength": 200 },
+        "equipmentCode": { "type": "string", "maxLength": 100 },
+        "equipmentCategory": { "type": "string", "maxLength": 100 },
+        "serialNumber": { "type": "string", "maxLength": 100 },
+        "locationRoom": { "type": "string", "maxLength": 100 },
+        "faultCategory": { "type": "string", "maxLength": 100 },
+        "faultDescription": { "type": "string", "maxLength": 2000 },
+        "requestedVisitTime": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string", "maxLength": 100 },
+        "status": { 
+          "type": "string", 
+          "enum": [
+            "pending_dispatch", 
+            "dispatched", 
+            "accepted", 
+            "in_progress", 
+            "waiting_parts", 
+            "completed", 
+            "closed", 
+            "cancelled"
+          ] 
+        },
+        "assignedTechnicianId": { "type": "string", "maxLength": 100 },
+        "assignedTechnicianName": { "type": "string", "maxLength": 100 },
+        "dispatchNotes": { "type": "string", "maxLength": 1000 },
+        "dispatchedAt": { "type": "string", "maxLength": 100 },
+        "acceptedAt": { "type": "string", "maxLength": 100 },
+        "startedAt": { "type": "string", "maxLength": 100 },
+        "completedAt": { "type": "string", "maxLength": 100 },
+        "closedAt": { "type": "string", "maxLength": 100 },
+        "cancelledAt": { "type": "string", "maxLength": 100 },
+        "cancelledBy": { "type": "string", "maxLength": 100 },
+        "cancelReason": { "type": "string", "maxLength": 1000 },
+        "faultDiagnosis": { "type": "string", "maxLength": 2000 },
+        "repairActionTaken": { "type": "string", "maxLength": 2000 },
+        "waitingPartsReason": { "type": "string", "maxLength": 1000 },
+        "partsUsed": { "type": "array" },
+        "customerSignName": { "type": "string", "maxLength": 100 },
+        "customerRating": { "type": "number" },
+        "customerFeedback": { "type": "string", "maxLength": 1000 },
+        "timeline": { "type": "array" },
+        "updatedAt": { "type": "string", "maxLength": 100 }
+      },
+      "required": [
+        "id",
+        "region",
+        "customerName",
+        "status",
+        "createdAt"
+      ]
+    },
+    "technician": {
+      "title": "Maintenance Technician",
+      "description": "Technician personnel profile and real-time workload status",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Technician ID" },
+        "name": { "type": "string", "maxLength": 100 },
+        "title": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "specialties": { "type": "array" },
+        "activeTicketsCount": { "type": "number" },
+        "completedCount": { "type": "number" },
+        "rating": { "type": "number" },
+        "status": { "type": "string", "enum": ["available", "busy", "off_duty"] },
+        "permissionLevel": { "type": "string", "enum": ["admin", "user"] },
+        "username": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["id", "name", "phone", "status"]
+    },
+    "userAccount": {
+      "title": "User Account",
+      "description": "System user account with role and granular permissions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Account ID" },
+        "username": { "type": "string", "maxLength": 100 },
+        "password": { "type": "string", "maxLength": 100 },
+        "name": { "type": "string", "maxLength": 100 },
+        "roleTitle": { "type": "string", "maxLength": 100 },
+        "department": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "permissionLevel": { "type": "string", "enum": ["admin", "user"] },
+        "associatedTechId": { "type": "string", "maxLength": 100 },
+        "permissions": { "type": "object" }
+      },
+      "required": ["id", "username", "name", "permissionLevel"]
+    }
+  },
+  "firestore": {
+    "/tickets/{ticketId}": {
+      "schema": "ticket",
+      "description": "Real-time maintenance tickets shared across dispatchers and technicians"
+    },
+    "/technicians/{technicianId}": {
+      "schema": "technician",
+      "description": "Technician profiles and workload counters"
+    },
+    "/accounts/{accountId}": {
+      "schema": "userAccount",
+      "description": "System accounts and permissions for team collaboration"
+    }
+  }
+}

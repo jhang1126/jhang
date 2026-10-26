@@ -1,0 +1,8 @@
+{
+  "name": "設備維修派工管理系統",
+  "description": "企業級設備維護叫修紀錄平台，支援客戶報修登錄、即時維修進度追蹤、智慧分派工單、技師接單處理與工單轉發流轉。",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
